@@ -1,0 +1,3 @@
+rootProject.name = 'flatmate'
+include 'services'
+include 'flatmate-ui'
