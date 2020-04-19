@@ -19,21 +19,18 @@ node {
        ./gradlew npm_<command> Executes an NPM command.
     */
     // Version of node to use.
-    version = '10.14.1'
+    version = '12.16.1'
     // Version of npm to use.
-    npmVersion = '6.4.1'
+    npmVersion = '6.13.4'
     // If true, it will download node using above parameters.
     // If false, it will try to use globally installed node.
     download = false
 }
 
-
-npm_run_build {
-    inputs.files fileTree("public")
-    inputs.files fileTree("src")
-    inputs.file 'package.json'
-    inputs.file 'package-lock.json'
-    outputs.dir 'build'
+task appNpmBuild(type: NpmTask) {
+    description = "Builds production version of the webapp"
+    workingDir = file("${project.projectDir}/src/main/webapp")
+    args = ["run", "build"]
 }
 
-assemble.dependsOn npm_run_build
+assemble.dependsOn appNpmBuild
