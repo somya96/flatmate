@@ -48,3 +48,6 @@ task copyWebApp(type: Copy) {
 assemble.dependsOn appNpmInstall
 assemble.dependsOn appNpmBuild
 assemble.dependsOn copyWebApp
+
+task stage(dependsOn: ['build', 'clean'])
+build.mustRunAfter clean
