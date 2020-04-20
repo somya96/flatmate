@@ -30,13 +30,13 @@ node {
 
 task appNpmInstall(type: NpmTask) {
     description = "Installs all dependencies from package.json"
-    workingDir = file("${project.projectDir}/flatmate-ui")
+//    workingDir = file("${project.projectDir}/flatmate-ui")
     args = ["install"]
 }
 
 task appNpmBuild(type: NpmTask) {
     description = "Builds production version of the webapp"
-    workingDir = file("${project.projectDir}/flatmate-ui")
+//    workingDir = file("${project.projectDir}/flatmate-ui")
     args = ["run", "build"]
 }
 
@@ -47,7 +47,7 @@ task copyWebApp(type: Copy) {
 
 appNpmBuild.dependsOn appNpmInstall
 //copyWebApp.dependsOn appNpmBuild
-compileJava.dependsOn appNpmInstall
+compileJava.dependsOn appNpmBuild
 
 task stage(dependsOn: ['build', 'clean'])
 build.mustRunAfter clean
