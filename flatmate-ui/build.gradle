@@ -46,8 +46,8 @@ task copyWebApp(type: Copy) {
 }
 
 appNpmBuild.dependsOn appNpmInstall
-copyWebApp.dependsOn appNpmBuild
-compileJava.dependsOn copyWebApp
+//copyWebApp.dependsOn appNpmBuild
+compileJava.dependsOn appNpmInstall
 
 task stage(dependsOn: ['build', 'clean'])
 build.mustRunAfter clean
