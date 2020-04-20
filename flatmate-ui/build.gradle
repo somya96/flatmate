@@ -45,9 +45,9 @@ task copyWebApp(type: Copy) {
     into '../services/src/main/resources'
 }
 
-assemble.dependsOn appNpmInstall
-assemble.dependsOn appNpmBuild
-assemble.dependsOn copyWebApp
+appNpmBuild.dependsOn appNpmInstall
+copyWebApp.dependsOn appNpmBuild
+compileJava.dependsOn copyWebApp
 
 task stage(dependsOn: ['build', 'clean'])
 build.mustRunAfter clean
