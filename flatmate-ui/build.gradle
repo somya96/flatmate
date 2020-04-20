@@ -42,12 +42,12 @@ task appNpmBuild(type: NpmTask) {
 
 task copyWebApp(type: Copy) {
     from 'build'
-    into '../services/src/main/resources'
+    into '../services/src/main/resources/static'
 }
 
 appNpmBuild.dependsOn appNpmInstall
-//copyWebApp.dependsOn appNpmBuild
-compileJava.dependsOn appNpmBuild
+copyWebApp.dependsOn appNpmBuild
+compileJava.dependsOn copyWebApp
 
 task stage(dependsOn: ['build', 'clean'])
 build.mustRunAfter clean
