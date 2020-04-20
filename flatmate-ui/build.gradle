@@ -45,6 +45,6 @@ task copyWebApp(type: Copy) {
     into '../services/src/main/resources'
 }
 
-appNpmBuild.dependsOn appNpmInstall
-copyWebApp.dependsOn appNpmBuild
-compileJava.dependsOn copyWebApp
+assemble.dependsOn appNpmInstall
+assemble.dependsOn appNpmBuild
+assemble.dependsOn copyWebApp
