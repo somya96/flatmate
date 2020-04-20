@@ -9,8 +9,9 @@ buildscript {
         classpath 'com.moowork.gradle:gradle-node-plugin:1.2.0'
     }
 }
-apply plugin: 'base'
+
 apply plugin: 'com.moowork.node' // gradle-node-plugin
+apply plugin: 'java'
 
 node {
     /* gradle-node-plugin configuration
@@ -27,10 +28,23 @@ node {
     download = false
 }
 
+task appNpmInstall(type: NpmTask) {
+    description = "Installs all dependencies from package.json"
+    workingDir = file("${project.projectDir}/flatmate-ui")
+    args = ["install"]
+}
+
 task appNpmBuild(type: NpmTask) {
     description = "Builds production version of the webapp"
-    workingDir = file("${project.projectDir}/src/main/webapp")
+    workingDir = file("${project.projectDir}/flatmate-ui")
     args = ["run", "build"]
 }
 
-assemble.dependsOn appNpmBuild
+task copyWebApp(type: Copy) {
+    from 'build'
+    into '../services/src/main/resources'
+}
+
+appNpmBuild.dependsOn appNpmInstall
+copyWebApp.dependsOn appNpmBuild
+compileJava.dependsOn copyWebApp
