@@ -1,1 +1,1 @@
-web: java -Dserver.port=0623 $JAVA_OPTS -jar services/build/libs/services-0.0.1-SNAPSHOT.jar
+web: java -jar services/build/libs/services-0.0.1-SNAPSHOT.jar
