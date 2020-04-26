@@ -1,1 +1,1 @@
-web: java -jar services/build/libs/services-0.0.1-SNAPSHOT.jar
+web: java -jar build/libs/services-0.0.1-SNAPSHOT.jar

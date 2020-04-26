@@ -14,5 +14,14 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
 
+task copyJarToMain {
+    copy {
+        from 'services/build/libs/services-0.0.1-SNAPSHOT.jar'
+        into 'build/libs'
+    }
+}
+
+build.dependsOn copyJarToMain
+
 task stage(dependsOn: ['build', 'clean'])
 build.mustRunAfter clean
