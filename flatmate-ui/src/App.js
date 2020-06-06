@@ -2,9 +2,10 @@ import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import './App.css';
 import Main from './components/MainComponent';
+import { addAuthentication } from './session';
 
 
-function App() {
+const App = () => {
   return (
     <BrowserRouter>
       <div>
@@ -14,4 +15,4 @@ function App() {
   );
 }
 
-export default App;
+export default addAuthentication(App);

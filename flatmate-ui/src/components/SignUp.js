@@ -12,6 +12,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { withFirebase } from '../firebase';
 import { compose } from 'recompose';
+import { withAuthentication } from '../session';
 
 const useStyles = theme => ({
     paper: {
@@ -66,32 +67,17 @@ class SignUpBase extends Component {
     };
 
     onSubmit = event => {
-        const { firstName, lastName, email, password } = this.state;
-        var xyz = false;
+        const { email, password } = this.state;
 
         this.props.firebase
             .doCreateUserWithEmailAndPassword(email, password)
             .then(authUser => {
                 this.setState({ ...INITIAL_STATE });
-                xyz = true;
+                this.props.history.push("/dashboard");
             })
             .catch(error => {
                 this.setState({ error });
             });
-
-        if (xyz) {
-            this.props.firebase.auth().sendSignInLinkToEmail(email, {url: 'https://www.google.com'})
-            .then(function() {
-              // The link was successfully sent. Inform the user.
-              // Save the email locally so you don't need to ask the user for it again
-              // if they open the link on the same device.
-              window.localStorage.setItem('emailForSignIn', email);
-            })
-            .catch(function(error) {
-              // Some error occurred, you can inspect the code: error.code
-              console.log("error");
-            }); 
-        }
 
         event.preventDefault();
     };
@@ -109,7 +95,7 @@ class SignUpBase extends Component {
                         <LockOutlinedIcon />
                     </Avatar>
                     <Typography component="h1" variant="h5">Sign up</Typography>
-                    <form className={classes.form} noValidate>
+                    <form onSubmit={this.onSubmit} method='post' className={classes.form}>
                         <Grid container spacing={2}>
                             <Grid item xs={12} sm={6}>
                                 <TextField
@@ -172,7 +158,6 @@ class SignUpBase extends Component {
                             variant="contained"
                             color="primary"
                             className={classes.submit}
-                            onClick={this.onSubmit}
                         >
                             Sign Up
                         </Button>

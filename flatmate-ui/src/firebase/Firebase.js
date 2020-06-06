@@ -16,6 +16,7 @@ class Firebase {
   constructor() {
     app.initializeApp(firebaseConfig);
     this.auth = app.auth();
+    this.googleProvider = new app.auth.GoogleAuthProvider();
     //this.firestore = app.firestore();
   }
 
@@ -32,22 +33,8 @@ class Firebase {
   doPasswordUpdate = password =>
     this.auth.currentUser.updatePassword(password);
 
-  doSignInWithGoogle = () => this.auth.signInWithPopup(this.auth.googleAuthProvider).then(function (result) {
-    // this.auth gives you a Google Access Token. You can use it to access the Google API.
-    this.auth.token = result.credential.accessToken;
-    // The signed-in user info.
-    this.auth.user = result.user;
-    // ...
-  }).catch(function (error) {
-    // Handle Errors here.
-    this.auth.errorCode = error.code;
-    this.auth.errorMessage = error.message;
-    // The email of the user's account used.
-    this.auth.email = error.email;
-    // The firebase.auth.AuthCredential type that was used.
-    this.auth.credential = error.credential;
-    // ...
-  });
+  doSignInWithGoogle = () =>
+    this.auth.signInWithPopup(this.googleProvider);
 }
 
 export default Firebase;

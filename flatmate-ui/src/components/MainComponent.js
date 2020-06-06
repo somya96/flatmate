@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Route, Redirect, Switch } from 'react-router-dom';
-import SignIn from './SignIn';
-import SignUpForm from './SignUp';
+import SignIn from './signIn';
+import SignUpForm from './signUp';
 import Dashboard from './DashboardComponent';
 
 export default class Main extends Component {

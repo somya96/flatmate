@@ -24,6 +24,7 @@ import InboxIcon from '@material-ui/icons/MoveToInbox';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import SearchIcon from '@material-ui/icons/Search';
 import React from 'react';
+import { withFirebase } from '../firebase';
 
 const drawerWidth=240;
 const useStyles = makeStyles((theme) => ({
@@ -104,7 +105,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Header() {
+function Header({firebase}) {
   const classes = useStyles();
   const theme = useTheme();
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -126,6 +127,11 @@ export default function Header() {
     handleMobileMenuClose();
   };
 
+  const handleMenuCloseWithSignout = () => {
+    firebase.doSignOut();
+    handleMenuClose();
+  }
+
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
@@ -143,7 +149,7 @@ export default function Header() {
     >
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
-      <MenuItem onClick={handleMenuClose} component={Link} to="/signin">Logout</MenuItem>
+      <MenuItem onClick={handleMenuCloseWithSignout} component={Link} to="/signin">Logout</MenuItem>
     </Menu>
   );
 
@@ -293,3 +299,5 @@ export default function Header() {
     </div>
   );
 }
+
+export default withFirebase(Header);
